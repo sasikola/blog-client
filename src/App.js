@@ -1,19 +1,38 @@
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
+import Login from "./Pages/Auth/Login";
+import Register from "./Pages/Auth/Register";
 
 function App() {
   return (
-    <div>
-      <Navbar />
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </Router>
+    <Router>
+      <Main />
+    </Router>
+  );
+}
 
-      <Footer />
+function Main() {
+  const location = useLocation();
+  const hideNavBar =
+    location.pathname === "/login" || location.pathname === "/register";
+
+  return (
+    <div>
+      {!hideNavBar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
+      {!hideNavBar && <Footer />}
     </div>
   );
 }
